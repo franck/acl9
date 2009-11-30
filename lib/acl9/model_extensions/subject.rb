@@ -43,7 +43,19 @@ module Acl9
           role && self.role_objects.exists?(role.id)
         end
       end
-
+      
+      # return true if current_user has one of these roles
+      # current_user.has_roles? "admin manager"
+      def has_roles?(roles)
+        roles = roles.split(" ")
+        for role in roles
+          if self.has_role? role
+            return true
+          end
+        end
+        return false
+      end
+      
       ##
       # Add specified role on +object+ to +self+.
       #
